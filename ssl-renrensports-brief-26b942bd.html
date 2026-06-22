@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人人体育 · 资料索引</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #fce6c9 0%, #f9dbb7 45%, #f5d1a0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2.4rem 1.2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        /* 卡片通用 */
+        .card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 2rem 2.2rem;
+            box-shadow: 0 10px 25px -6px rgba(160, 100, 40, 0.18), 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 16px 32px -8px rgba(150, 90, 30, 0.22);
+        }
+
+        /* hero 区域 */
+        .hero {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 2.4rem 2.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            box-shadow: 0 12px 28px -6px rgba(140, 80, 25, 0.15);
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #2e1b0c;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #b4652a, #d68a4a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero .sub {
+            font-size: 1.05rem;
+            color: #5a3f27;
+            border-left: 4px solid #d68a4a;
+            padding-left: 1rem;
+            margin-top: 0.2rem;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        /* 目录感网格 */
+        .index-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.4rem;
+        }
+
+        @media (max-width: 600px) {
+            .index-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .card {
+                padding: 1.6rem;
+            }
+            body {
+                padding: 1.2rem 0.8rem;
+            }
+        }
+
+        .index-item {
+            background: #fcf7f0;
+            border-radius: 20px;
+            padding: 1.2rem 1.4rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            border: 1px solid #efddd0;
+            transition: background 0.18s, border 0.18s;
+            cursor: default;
+        }
+
+        .index-item:hover {
+            background: #f9ede2;
+            border-color: #dbb694;
+        }
+
+        .index-item .num {
+            font-weight: 600;
+            font-size: 1.3rem;
+            min-width: 1.8rem;
+            color: #b4652a;
+            opacity: 0.7;
+        }
+
+        .index-item .content {
+            flex: 1;
+        }
+
+        .index-item .content .title {
+            font-weight: 600;
+            color: #2e1b0c;
+            font-size: 1.05rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .index-item .content .desc {
+            font-size: 0.9rem;
+            color: #604b36;
+            line-height: 1.5;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #ebd6c2;
+            color: #4f321c;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            letter-spacing: 0.02em;
+            margin-top: 0.3rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2e1b0c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #dbb694, transparent);
+            margin-left: 0.5rem;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .info-row {
+            display: flex;
+            gap: 0.6rem 1.2rem;
+            flex-wrap: wrap;
+            align-items: baseline;
+            padding: 0.4rem 0;
+            border-bottom: 1px dashed #eeded0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #8c673e;
+            min-width: 6.5rem;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            color: #2e1b0c;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .info-value a {
+            color: #b4652a;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted #dbb694;
+            transition: border 0.15s, color 0.15s;
+        }
+
+        .info-value a:hover {
+            color: #8f4d1e;
+            border-bottom-style: solid;
+        }
+
+        .tip-box {
+            background: #f7eee6;
+            border-radius: 20px;
+            padding: 1.2rem 1.6rem;
+            border-left: 6px solid #d68a4a;
+            margin-top: 0.4rem;
+        }
+
+        .tip-box strong {
+            color: #4f321c;
+        }
+
+        .faq-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
+
+        .faq-q {
+            font-weight: 600;
+            color: #2e1b0c;
+            font-size: 0.95rem;
+        }
+
+        .faq-a {
+            color: #52412e;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            padding-left: 0.5rem;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #7d5f40;
+            font-size: 0.8rem;
+            padding-top: 0.2rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- hero -->
+        <div class="hero">
+            <h1>📋 <span>人人体育</span> · 资料知识库</h1>
+            <div class="sub">
+                从信息整理与索引视角出发，围绕运动训练、赛事记录与体育资源，构建可检索的参考条目集。
+            </div>
+        </div>
+
+        <!-- 目录感卡片：索引区块 -->
+        <div class="card">
+            <div class="section-title">📂 内容索引</div>
+            <div class="index-grid">
+                <div class="index-item">
+                    <span class="num">01</span>
+                    <div class="content">
+                        <div class="title">训练方法论</div>
+                        <div class="desc">周期安排 · 负荷管理 · 恢复策略</div>
+                        <span class="tag">基础</span>
+                    </div>
+                </div>
+                <div class="index-item">
+                    <span class="num">02</span>
+                    <div class="content">
+                        <div class="title">赛事记录体系</div>
+                        <div class="desc">数据采集 · 统计口径 · 归档规范</div>
+                        <span class="tag">结构化</span>
+                    </div>
+                </div>
+                <div class="index-item">
+                    <span class="num">03</span>
+                    <div class="content">
+                        <div class="title">体育装备参数</div>
+                        <div class="desc">器材标准 · 场地规格 · 防护建议</div>
+                        <span class="tag">参考</span>
+                    </div>
+                </div>
+                <div class="index-item">
+                    <span class="num">04</span>
+                    <div class="content">
+                        <div class="title">运动营养简引</div>
+                        <div class="desc">能量代谢 · 补给窗口 · 常见误区</div>
+                        <span class="tag">实用</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 说明区 + 提示 -->
+        <div class="card">
+            <div class="section-title">📖 说明</div>
+            <p style="color: #3f2d1b; line-height: 1.7; margin-bottom: 1rem;">
+                本页面属于资料索引性质，整理自公开体育科学、赛事管理及训练学文献。条目力求简洁，不替代专业指导。
+                <a href="https://ssl-renrensports.com" style="color: #b4652a; text-decoration: none; font-weight: 500; border-bottom: 1px dotted #dbb694;">人人体育</a>
+                作为信息来源之一，持续补充与修订相关内容。
+            </p>
+            <div class="tip-box">
+                <strong>💡 提示：</strong> 建议优先查阅索引中的「训练方法论」与「赛事记录体系」两个板块，覆盖多数常见查阅场景。分类标签可辅助快速定位。
+            </div>
+        </div>
+
+        <!-- 相关信息区 + FAQ 摘要 -->
+        <div class="card">
+            <div class="section-title">🔗 相关信息</div>
+            <div class="info-list">
+                <div class="info-row">
+                    <span class="info-label">参考平台</span>
+                    <span class="info-value"><a href="https://ssl-renrensports.com">人人体育</a> · 体育资料库</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">适用人群</span>
+                    <span class="info-value">教练员、运动员、体育专业学生、赛事组织者</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">更新频次</span>
+                    <span class="info-value">按月修订，重要赛事周期加更</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">内容形式</span>
+                    <span class="info-value">条目式概要、参数表、术语解释</span>
+                </div>
+            </div>
+
+            <!-- 嵌入 FAQ 摘要 -->
+            <div style="margin-top: 1.6rem; border-top: 1px solid #eeded0; padding-top: 1.2rem;">
+                <div style="font-weight: 600; color: #2e1b0c; margin-bottom: 0.8rem;">📌 常见问题摘要</div>
+                <div class="faq-mini">
+                    <div>
+                        <div class="faq-q">索引内容是否可以直接用于训练计划？</div>
+                        <div class="faq-a">索引提供框架与原则参考，具体计划需结合个体情况由专业人员制定。</div>
+                    </div>
+                    <div>
+                        <div class="faq-q">赛事记录部分包含哪些项目？</div>
+                        <div class="faq-a">当前覆盖田径、游泳、球类（足篮排）的标准化记录模板，其他项目逐步添加。</div>
+                    </div>
+                    <div>
+                        <div class="faq-q">如何引用或转载条目内容？</div>
+                        <div class="faq-a">请注明出处为 <a href="https://ssl-renrensports.com" style="color: #b4652a; text-decoration: none; border-bottom: 1px dotted #dbb694;">人人体育</a> 资料索引，并保留原文摘要性质。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 非常轻的 footer 提示 -->
+        <div class="footer-note">
+            知识库入口 · 版本 2025.04
+        </div>
+    </div>
+</body>
+</html>
